@@ -1,0 +1,70 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+<view>
+  <i-panel title="标题">
+    <view style="padding: 15px;">PANEL 内容区域</view>
+</i-panel>
+</view>
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import service from '../store/service.js'
+
+
+  export default class Detail extends wepy.page {
+    config = {
+      navigationBarTitleText: '宝宝星-详情',
+      "usingComponents": {
+        "i-panel": "../resources/ui/panel/index"
+        }
+      }
+    
+    components = {
+    }
+
+    data = {
+      detail : {}
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      
+    }
+
+    events = {
+     
+    }
+
+    async onLoad(options) {
+      console.log(options)
+      let res = await service.detail({query: options});
+      if (res.data.code === 200) {
+          this.detail = res.data.data;
+          this.$apply();
+      }
+    }
+  }
+</script>

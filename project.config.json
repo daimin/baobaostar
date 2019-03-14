@@ -1,0 +1,16 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"appid": "wx1e0662834a542b7f",
+	"projectname": "baobaostar",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}

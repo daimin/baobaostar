@@ -1,0 +1,137 @@
+<style lang="less">
+.nlist {
+  margin-bottom: 100rpx;
+}
+.novel-card {
+  border: 0;
+}
+
+.novel-intro {
+  color: #666;
+  font-size: 24rpx;
+}
+
+.search-i-cell{
+  position: fixed;
+  width:100%;
+  height:100rpx;
+  left:0;
+  top:0;
+  z-index:100;
+  margin-bottom: 100rpx;
+}
+</style>
+<template>
+  <view class="nlist">
+    <i-cell-group>
+      <i-cell class="{{get_search_class}}">
+        <NSearch></NSearch>
+      </i-cell>
+      <i-cell
+        wx:for="{{list}}"
+        wx:for-index="idx"
+        wx:for-item="item"
+        wx:key="{{idxid}}"
+        title=""
+        is-link
+        url="/pages/detail?name={{item.title}}"
+      >
+        <i-card
+          title="{{item.title}}"
+          extra=""
+          thumb="{{item.main_img.thumb}}/s/64"
+          full="true"
+          i-class="novel-card"
+        >
+          <view slot="content" class="novel-intro">{{item.intro}}</view>
+          <view slot="footer">{{item.category.name}} | {{item.admin.name}} | {{item.createtime}}</view>
+        </i-card>
+        
+      </i-cell>
+    </i-cell-group>
+    <i-load-more loading="{{list_loading}}"/>
+  </view>
+</template>
+
+<script>
+import wepy from "wepy";
+import service from "../store/service.js";
+import NSearch from "../components/nsearch";
+
+export default class NList extends wepy.component {
+  props = {
+    scrollTop : String
+  };
+
+  components = {
+    NSearch: NSearch
+  };
+
+  data = {
+    list: [],
+    pageno : 1,
+    list_loading : false,
+  };
+
+   watch = {
+      scrollTop (newValue, oldValue) {
+        // this.$apply()
+      }
+  }
+
+  computed = {
+    now() {
+      return +new Date();
+    },
+    get_search_class(){
+       this.scrollTop += 0
+       if(this.scrollTop > 100){
+         return 'search-i-cell';
+       }
+       return '';
+    }
+  };
+
+  onShow () {
+  this.disableDigest()
+}
+
+disableDigest () {
+  this.$$phase = true
+
+  setTimeout(() => {
+    this.$$phase = false
+  })
+}
+
+  methods = {};
+
+  async getList () {
+     this.list_loading = true
+     let res = await service.newlist({data:{pageno: this.pageno}});
+      if (res.data.errCode === 0) {
+        this.list = this.list.concat(res.data.data);
+        this.pageno += 1
+      }
+  };
+
+  async onLoad(options) {
+      await this.getList()
+      this.$apply()
+  }
+
+  load(list) {
+    console.log("load....");
+    // this.$apply();
+  }
+
+  async listReachBottom(){
+      await this.getList()
+      this.$apply();
+  }
+
+  events = {
+        'list-reach-bottom': this.listReachBottom
+    };
+}
+</script>

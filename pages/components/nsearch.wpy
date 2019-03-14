@@ -1,0 +1,71 @@
+<style lang="less">
+  .i-cell .i-input{
+    border:1px solid red;
+  }
+  .search-view {
+    height: 100rpx;
+    min-height: 100rpx;
+    width: 100%;
+  }
+  .search-view .search-input{
+    border:1px solid #ccc;
+    padding: 12rpx;
+    border-radius:24rpx;
+    width: 480rpx;
+    min-width: 480rpx;
+    height:50rpx;
+    margin-top: 16rpx;
+    margin-left: 36rpx;
+    background-color: #efefef;
+  }
+
+  .search-view .search-btn{
+    height: 75rpx;
+    min-height: 75rpx;
+    line-height: 75rpx;
+    width: 120rpx;
+    border-radius:24rpx;
+    margin-top: 18rpx;
+  }
+</style>
+<template>
+<i-panel i-class="search-view">
+  <i-row>
+    <i-col span="18" i-class="col-class">
+      <i-panel title="">
+        <i-input i-class="search-input" value="{{ value1 }}" title="" autofocus placeholder="搜索"  />
+      </i-panel>
+    </i-col>
+    <i-col span="6" i-class="col-class">
+      <i-button i-class="search-btn" bind:click="handleClick" type="primary" size="small">搜索</i-button>
+    </i-col>
+</i-row>
+</i-panel>
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class NSearch extends wepy.component {
+  
+
+    components = {
+    }
+
+
+    data = {
+      
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+    
+    }
+  }
+</script>

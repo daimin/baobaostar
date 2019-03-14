@@ -1,0 +1,108 @@
+<style lang="less">
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+</style>
+<template>
+  <view>
+    <i-row>
+      <i-col span="24" i-class="col-class">
+        <!-- <i-divider content=""></i-divider> -->
+      </i-col>
+    </i-row>
+    <i-row>
+      <i-col span="24" i-class="col-class">
+        <NList :scrollTop.sync="scrollTop"></NList>
+      </i-col>
+    </i-row>
+    <i-row>
+      <i-col span="24" i-class="col-class">
+        <TabBar></TabBar>
+      </i-col>
+    </i-row>
+  </view>
+</template>
+
+<script>
+import wepy from "wepy";
+import { connect } from "wepy-redux";
+import Toast from "wepy-com-toast";
+
+import NList from "../components/nlist";
+import TabBar from "../components/tabbar";
+
+@connect({})
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: "宝宝星",
+    usingComponents: {
+      "i-cell-group": "../resources/ui/cell-group/index",
+      "i-cell": "../resources/ui/cell/index",
+      "i-panel": "../resources/ui/panel/index",
+      "i-input": "../resources/ui/input/index",
+      "i-divider": "../resources/ui/divider/index",
+      "i-button": "../resources/ui/button/index",
+      "i-row": "../resources/ui/row/index",
+      "i-col": "../resources/ui/col/index",
+      "i-card": "../resources/ui/card/index",
+      "i-tab-bar": "../resources/ui/tab-bar/index",
+      "i-tab-bar-item": "../resources/ui/tab-bar-item/index",
+      "i-sticky": "../resources/ui/sticky/index",
+      "i-sticky-item": "../resources/ui/sticky-item/index",
+      "i-load-more": "../resources/ui/load-more/index"
+    }
+  };
+
+  components = {
+    NList: NList,
+    TabBar: TabBar
+  };
+
+  data = {
+    scrollTop: 0
+  };
+
+  computed = {
+    now() {
+      return +new Date();
+    }
+  };
+
+  methods = {
+    //页面滚动执行方式
+    onPageScroll(event) {
+      this.scrollTop = event.scrollTop
+      // console.log(this.scrollTop);
+      this.$apply() 
+    }
+  };
+
+  events = {};
+
+  async onLoad(options) {}
+
+  onShow(){
+    console.log("on show ===========")
+  }
+
+  async onPullDownRefresh() {
+      wepy.stopPullDownRefresh()
+  }
+  async onReachBottom () {
+    this.$broadcast('list-reach-bottom');
+  }
+}
+</script>

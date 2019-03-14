@@ -1,0 +1,56 @@
+<style lang="less">
+.nlist{
+}
+.novel-card  {
+
+}
+
+.novel-intro{
+  color:#666;
+  font-size:24rpx;
+}
+
+
+
+
+</style>
+<template>
+    <i-tab-bar current="{{ current }}" bindchange="handleChange" fixed="true">
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
+    <i-tab-bar-item key="hot" icon="hot" current-icon="hot_fill" title="热门"></i-tab-bar-item>
+    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill"  title="发现"></i-tab-bar-item>
+    <i-tab-bar-item key="collection" icon="collection" current-icon="collection_fill" dot title="收藏"></i-tab-bar-item>
+</i-tab-bar>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class TabBar extends wepy.component {
+    props = {
+    };
+
+    components = {
+    }
+
+
+    data = {
+      list : []
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+    }
+
+    onLoad (options) {
+    };
+
+    load () {
+    }
+}
+</script>
